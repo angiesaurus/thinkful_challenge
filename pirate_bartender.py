@@ -34,13 +34,13 @@ def drink_preference(dictionary):
             for i in desired_ingredients:
                 wanted_ingredients[i] = []
 #    print wanted_ingredients
-
     ingredient_key = ingredients.keys()
     ingredient_list = []
     for i in range(len(wanted_ingredients.keys())):
         if wanted_ingredients.keys()[i] in ingredient_key:
             ingredient_list.append(random.choice(ingredients.values()[i]))
     print ingredient_list
-    
+    #print 'Enjoy your drink, it contains %s!' % (str(ingredient_list),)
+
 if __name__=="__main__":
     drink_preference(questions)
