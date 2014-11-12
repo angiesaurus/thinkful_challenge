@@ -19,13 +19,18 @@ bike4 = Bicycle('Fixed Fixie', 13, 800.00)
 bike5 = Bicycle('Lazy Cat', 10, 545.00)
 bike6 = Bicycle('Torpedo', 11, 1275.00)
 
-class BikeShops(object):
+class BikeShop(object):
 	profit_margin = .20 
 	def __init__(self, name):
+		#self.bikes = dict
 		self.bikes = []
 		self.customers = []
 		self.name = name
 		self.profit = 0
+
+	# def bike_names(self, bike):
+	# 	self.bike_name.append(bike.model_name)
+	# 	print self.bike_name
 
 	def __str__(self):
 		return self.name
@@ -34,35 +39,41 @@ class BikeShops(object):
 		return self.name
 
 	def bike_cost(self, bike):
-		return bike.production_cost * (1 + self.profit_margin)
-
+		bike_cost = (bike.production_cost * (1 + self.profit_margin))
+		return bike_cost
+		
 	def add_customer(self, customer):
 		self.customers.append(customer)
 
 	def print_customers(self):
 		for customer in self.customers:
-			print customer
+			return customer
 
 	def add_bike(self, bike):
-		self.bikes.append(bike)
+			self.bikes.append(bike)
 
 	def get_inventory(self):
-		return len(self.bikes)
-
-	# def count_bikes(self):
-	# 	for bike in self.bikes:
-	# 		self.bikes.count(bike)
+		inventory = {}
+		for bike in self.bikes:
+			inventory[bike.model_name] = 10
+		return inventory
 
 	def overall_profit(self, bike_cost):
 		profit += (bike_cost() - bike.production_cost)
-		print profit
+		return profit
 
 	def available_bikes(self, max_costs):
 		affordable_bikes = []
 		for bike in self.bikes:
 			if self.bike_cost(bike) <= max_costs:
 				affordable_bikes.append(bike)
-		print affordable_bikes
+		return affordable_bikes
+
+
+	# def purchase(self, customer):
+	# 	for customer in self.customers:
+	# 		bought_bike = random.choice(AngiesShop.available_bikes(customer.available_funds))
+	# 	print bought_bike
 
 	def purchased_bike(self, bike, customer):
 		if bike in self.bikes:
@@ -71,6 +82,13 @@ class BikeShops(object):
 			self.profit += bike_cost
 
 
+angies_shop = BikeShop('angies_shop')
+angies_shop.add_bike(bike1)
+angies_shop.add_bike(bike2)
+angies_shop.add_bike(bike3)
+angies_shop.add_bike(bike4)
+angies_shop.add_bike(bike5)
+angies_shop.add_bike(bike6)
 
 class Customer(object):
 	def __init__(self, name, available_funds):
@@ -82,7 +100,7 @@ class Customer(object):
 
 	def __repr__(self):
 		return self.name
-
+		
 	def bike_payment(self, bike_cost):
 		self.available_funds -= bike_cost
 
@@ -90,24 +108,43 @@ customer1 = Customer('Bob', 200.00,)
 customer2 = Customer('Mary', 500.00)
 customer3 = Customer('Jack', 1000.00)
 
+#create customer when they enter the shop
 
-AngiesShop = BikeShops('AngiesShop')
-AngiesShop.add_customer(customer1)
-AngiesShop.add_customer(customer2)
-AngiesShop.add_customer(customer3)
+angies_shop.add_customer(customer1)
+angies_shop.add_customer(customer2)
+angies_shop.add_customer(customer3)
 
-AngiesShop.add_bike(bike1)
-AngiesShop.add_bike(bike2)
-AngiesShop.add_bike(bike3)
-AngiesShop.add_bike(bike4)
-AngiesShop.add_bike(bike5)
-AngiesShop.add_bike(bike6)
 
-print AngiesShop.get_inventory()
-print customer1.name, AngiesShop.available_bikes(customer1.available_funds)
-print customer2.name, AngiesShop.available_bikes(customer2.available_funds)
-print customer3.name, AngiesShop.available_bikes(customer3.available_funds)
+# print customer1.name, AngiesShop.available_bikes(customer1.available_funds)
+# # prints Bob[Uphill Tank]
 
-#AngiesShop.inventory will return 60
+# print customer2.name, AngiesShop.available_bikes(customer2.available_funds)
+# #prints Mary[Cruiser, Uphill Tank]
 
+# print customer3.name, AngiesShop.available_bikes(customer3.available_funds)
+# #prints Jack[Cruiser, Anti-Cruiser, Uphill Tank, Fixed Fixie, Lazy Cat]
+
+print angies_shop.get_inventory()
+"""
+prints Cruiser : 10
+Anti-Cruister : 10
+Uphill Tank : 10
+Fixed Fixie : 10
+Lazy Cat : 10
+Torpedo : 10
+"""
+
+purchase1 = random.choice(angies_shop.available_bikes(customer1.available_funds))
+purchase2 = random.choice(angies_shop.available_bikes(customer2.available_funds))
+purchase3 = random.choice(angies_shop.available_bikes(customer3.available_funds))
+
+print 'The following bikes were purchased: '
+print str(customer1.name) + ' : ' + str(purchase1)
+print str(customer2.name) + ' : ' + str(purchase2)
+print str(customer3.name) + ' : ' + str(purchase3)
+
+angies_shop.purchased_bike(purchase1, customer1)
+# purchase3
+# AngiesShop.purchase(customer1)
+# AngiesShop.purchase(customer2)
 

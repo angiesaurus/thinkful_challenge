@@ -21,26 +21,25 @@ ingredients = {
 #print questions.values()
 #print ingredients.keys()
 
-desired_ingredients = []
-key = questions.keys()
-yes_list = ['y', 'yes']
 
-def drink_preference(dictionary):
-    for i in range(len(questions.values())):
-        if raw_input(questions.values()[i]) in yes_list:
-            desired_ingredients.append(key[i])
-#    print desired_ingredients
-            wanted_ingredients = {}
-            for i in desired_ingredients:
-                wanted_ingredients[i] = []
-#    print wanted_ingredients
-    ingredient_key = ingredients.keys()
-    ingredient_list = []
-    for i in range(len(wanted_ingredients.keys())):
-        if wanted_ingredients.keys()[i] in ingredient_key:
-            ingredient_list.append(random.choice(ingredients.values()[i]))
-    print ingredient_list
-    #print 'Enjoy your drink, it contains %s!' % (str(ingredient_list),)
+key = questions.keys()
+
+def drink_preference():
+    desired_ingredients = {}
+    for i in questions:
+        response = raw_input(questions[i] + " ")
+        desired_ingredients[i] = True if (response == 'y' or response == 'yes') else False
+    return desired_ingredients
+
+
+def make_drink():
+    drink = []
+    for i in desired_ingredients:
+        if desired_ingredients[i]:
+            drink.append(random.choice(ingredients[i]))
+    print '-'*80+ '\nYour drink is ' + ', '.join(drink)
+
 
 if __name__=="__main__":
-    drink_preference(questions)
+    desired_ingredients = drink_preference()
+    make_drink()
