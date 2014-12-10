@@ -36,8 +36,38 @@ def put(name, snippet, filename):
     logging.debug("Write sucessful")
     return name, snippet
 
-def make_parser():
-    """Construct the command line parser"""
+def get(name, filename):
+    """Retrieve a snippe with an associated name in the CSV file"""
+    logging.debug("Opening file")
+    description = "Retrieve snippets of text"
+    with open(filename, 'rb') as csvfile:
+        snippet_reader = csv.reader(csvfile)
+        for row in snippet_reader:
+            if name in row:
+                yield row
+
+
+def main(arguments):
+    """Main Function"""
+    logging.info("Starting snippets")
+    #convert parsed arguments from Namespace to dictionary
+    command = arguments.pop("command")
+
+    if command == 'put':
+        name, snippet = put(**arguments)
+        print "Stored {!r} as {!r}".format(snippet, name)
+
+    if command == 'get':
+        results = [x for x in get(**arguments)]
+        if results:
+            print results
+        else:
+            print "ERROR - Name is nonexistent!!!!!!!!!"
+
+    # else:
+    #     print "Snippet is nonexistent"
+
+if __name__== "__main__":
     logging.info("Constructing Parser")
     description = "Store and retrieve snippets of text"
     parser = argparse.ArgumentParser(description=description)
@@ -51,20 +81,17 @@ def make_parser():
     put_parser.add_argument("snippet", help="The snippet text")
     put_parser.add_argument("filename", default="snippets.csv", nargs="?",
                             help="The snippet filename")
-    return parser
 
-def main():
-    """Main Function"""
-    logging.info("Starting snippets")
-    parser = make_parser()
+    get_parser = subparsers.add_parser("get", help="Retrieve a snippet")
+    get_parser.add_argument("name", help="The name of something")
+    get_parser.add_argument("filename", default="snippets.csv", nargs='?', help="The snippet filename")
     arguments = parser.parse_args(sys.argv[1:])
-    #convert parsed arguments from Namespace to dictionary
     arguments = vars(arguments)
-    command = arguments.pop("command")
+    main(arguments)
 
-    if command == 'put':
-        name, snippet = put(**arguments)
-        print "Stored {!r} as {!r}".format(snippet, name)
 
-if __name__=="__main__":
-    main()
+
+
+
+
+
