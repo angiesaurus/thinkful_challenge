@@ -37,6 +37,7 @@ class BikeShop(object):
 	def total_profit(self):
 		return self.profit
 
+#list comprehension -- fix
 	def available_bikes(self, max_costs):
 		affordable_bikes = []
 		for bike in self.bikes:
@@ -44,6 +45,7 @@ class BikeShop(object):
 				affordable_bikes.append(bike)
 		return affordable_bikes
 
+#else for 0 bikes -- fix
 	def sell_bike(self, bike, customer):
 		if self.inventory[bike.model_name] > 0:
 			self.inventory[bike.model_name] -= 1
