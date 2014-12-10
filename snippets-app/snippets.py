@@ -10,21 +10,6 @@ def put(name, snippet, filename):
     """ Store a snippet with an associated name in the CSV file """
     pass
 
-# def write_csv(data, path):
-# 	"""
-# 	writes data to a CSV file path
-# 	"""
-# 	with open(path, 'wb') as csv_file:
-# 		writer = csv.writer(csv_file, delimiter=',')
-# 		for line in data:
-# 			writer.writerow(line)
-
-# if __name__=='__main__':
-# 	data = []
-# 	path = ''
-# 	csv_writer(data,path)
-
-
 def put(name, snippet, filename):
     """ Store a snippet with an associated name in the CSV file """
     logging.info("Writing {!r}:{!r} to {!r}".format(name, snippet, filename))
@@ -46,7 +31,6 @@ def get(name, filename):
             if name in row:
                 yield row
 
-
 def main(arguments):
     """Main Function"""
     logging.info("Starting snippets")
@@ -63,9 +47,6 @@ def main(arguments):
             print results
         else:
             print "ERROR - Name is nonexistent!!!!!!!!!"
-
-    # else:
-    #     print "Snippet is nonexistent"
 
 if __name__== "__main__":
     logging.info("Constructing Parser")
